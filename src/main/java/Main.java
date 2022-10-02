@@ -6,15 +6,12 @@ import thread.Buyer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Main {
 
-    public final static int ISSUE = 2;
-    public final static int PEOPLE = 4;
+    public final static int ISSUE = 6;
     public final static int TIME_ADMISSION = 4000;
-    public final static int TIME_PEOPLE_BUY = 2000;
+    public final static int TIME_PEOPLE_BUY = 2500;
 
     public static void main(String[] args) {
         List<CarImp> auto = new ArrayList<>();
@@ -33,7 +30,11 @@ public class Main {
                         case 2 -> auto.add(newCar = new Toyota("RAV4", 2019));
                     }
                     newCar.admission();
-                    auto.notify();
+                    try {
+                        auto.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
                 try {
                     Thread.sleep(TIME_ADMISSION);

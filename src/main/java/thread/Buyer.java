@@ -1,6 +1,7 @@
 package thread;
 
 import avto.CarImp;
+
 import java.util.List;
 
 public class Buyer extends Thread {
@@ -21,13 +22,10 @@ public class Buyer extends Thread {
         return number;
     }
 
-    public int getTime() {
-        return time;
-    }
-
     @Override
     public void run() {
-        for (int i = 0; i < 10; i++) {
+
+        do {
             synchronized (list) {
                 System.out.println("Покупатель " + getNumber() + " зашёл в магазин");
                 if (list.isEmpty()) {
@@ -37,17 +35,13 @@ public class Buyer extends Thread {
                             getNumber(),
                             list.remove(0));
                 }
-                try {
-                    list.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                list.notify();
             }
             try {
                 Thread.sleep(time);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
+        } while (thread.isAlive());
     }
 }
