@@ -10,7 +10,7 @@ import java.util.Random;
 public class Main {
 
     public final static int ISSUE = 6;
-    public final static int TIME_ADMISSION = 4000;
+    public final static int TIME_ADMISSION = 1000;
     public final static int TIME_PEOPLE_BUY = 2500;
 
     public static void main(String[] args) {
@@ -22,7 +22,7 @@ public class Main {
 
             int value;
             for (int i = 0; i < ISSUE; i++) {
-                value = random.nextInt(2);
+                value = random.nextInt(3);
                 synchronized (auto) {
                     switch (value) {
                         case 0 -> auto.add(newCar = new Toyota("Camry", 2016));
@@ -45,14 +45,10 @@ public class Main {
         });
         carThread.start();
 
-        Thread buy1 = new Buyer(1, TIME_PEOPLE_BUY, auto, carThread);
-        Thread buy2 = new Buyer(2, TIME_PEOPLE_BUY, auto, carThread);
-        Thread buy3 = new Buyer(3, TIME_PEOPLE_BUY, auto, carThread);
-        Thread buy4 = new Buyer(4, TIME_PEOPLE_BUY, auto, carThread);
-        buy1.start();
-        buy2.start();
-        buy3.start();
-        buy4.start();
-
+        for (int i = 1; i <= 4; i++) {
+            Thread buy = new Thread(new Buyer(TIME_PEOPLE_BUY, auto, carThread));
+            buy.setName("Покупатель " + i);
+            buy.start();
+        }
     }
 }

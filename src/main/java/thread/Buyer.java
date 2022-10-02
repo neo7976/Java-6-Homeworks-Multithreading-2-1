@@ -5,21 +5,14 @@ import avto.CarImp;
 import java.util.List;
 
 public class Buyer extends Thread {
-    private int number;
     private int time;
     private final List<CarImp> list;
     private Thread thread;
 
-
-    public Buyer(int number, int time, List<CarImp> list, Thread thread) {
-        this.number = number;
+    public Buyer(int time, List<CarImp> list, Thread thread) {
         this.time = time;
         this.list = list;
         this.thread = thread;
-    }
-
-    public int getNumber() {
-        return number;
     }
 
     @Override
@@ -27,12 +20,12 @@ public class Buyer extends Thread {
 
         do {
             synchronized (list) {
-                System.out.println("Покупатель " + getNumber() + " зашёл в магазин");
+                System.out.println(Thread.currentThread().getName() + " зашёл в магазин");
                 if (list.isEmpty()) {
                     System.out.println("Машин нет");
                 } else {
-                    System.out.printf("Покупатель %d купил %s.\n",
-                            getNumber(),
+                    System.out.printf("%s купил %s.\n",
+                            Thread.currentThread().getName(),
                             list.remove(0));
                 }
                 list.notify();
