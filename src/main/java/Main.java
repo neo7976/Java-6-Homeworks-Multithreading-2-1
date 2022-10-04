@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class Main {
 
-    public final static int ISSUE = 6;
+    public final static int ISSUE = 10;
     public final static int TIME_ADMISSION = 1000;
     public final static int TIME_PEOPLE_BUY = 2500;
 
